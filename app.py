@@ -4,6 +4,9 @@ from flask_migrate import Migrate
 from flask_marshmallow import Marshmallow
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_cors import CORS
+import marshmallow_sqlalchemy
+
+
 
 app = Flask(__name__)
 
@@ -52,7 +55,7 @@ class Expense(db.Model):
     user = db.relationship('Role', backref=db.backref('expenses', lazy=True))
 
 # Schemas
-class RoleSchema(ma.SQLAlchemyAutoSchema):
+class RoleSchema(marshmallow_sqlalchemy.SQLAlchemyAutoSchema):
     class Meta:
         model = Role
         fields = ('id', 'email')
