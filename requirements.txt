@@ -1,0 +1,8 @@
+flask
+sqlalchemy
+migrate
+marshmallow
+werkzeug.security
+cors
+
+
