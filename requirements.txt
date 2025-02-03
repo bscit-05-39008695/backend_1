@@ -4,5 +4,6 @@ flask_sqlalchemy
 flask_migrate
 flask_marshmallow
 flask_cors
+marshmallow_sqlalchemy
 
 
