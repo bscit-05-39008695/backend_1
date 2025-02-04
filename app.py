@@ -4,18 +4,21 @@ from flask_migrate import Migrate
 from flask_marshmallow import Marshmallow
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_cors import CORS
-import os
-from dotenv import load_dotenv
 
 
 app = Flask(__name__)
 
-# Load environment variables from .env file
-load_dotenv()
-
+# Database configuration
+DB_CONFIG = {
+    "database": "postgres",
+    "user": "postgres.nzqybfjrmlsbrskzbyil",
+    "password": "WMBqWdQO4TYIx8MM",
+    "host": "aws-0-ap-south-1.pooler.supabase.com",
+    "port": 5432
+}
 
 # Set up database URI for SQLAlchemy
-app.config['SQLALCHEMY_DATABASE_URI'] = f"postgresql://{os.getenv('DB_USER')}:{os.getenv('DB_PASSWORD')}@{os.getenv('DB_HOST')}:{os.getenv('DB_PORT')}/{os.getenv('DB_NAME')}"
+app.config['SQLALCHEMY_DATABASE_URI'] = f"postgresql://{DB_CONFIG['user']}:{DB_CONFIG['password']}@{DB_CONFIG['host']}:{DB_CONFIG['port']}/{DB_CONFIG['database']}"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # Configure connection pooling
@@ -178,5 +181,4 @@ def shutdown_session(exception=None):
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()  # Ensure the database tables are created
-    port = int(os.environ.get("PORT", 5000))  # Get port from environment, default to 5000
-    app.run(debug=False, host='0.0.0.0', port=port)
+    app.run(port=5002, debug=True)
